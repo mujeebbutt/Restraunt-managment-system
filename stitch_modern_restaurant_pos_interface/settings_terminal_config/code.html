@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>QuickServe POS - Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Outfit:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-tab {
+            border-left: 4px solid #00535b;
+            background-color: #f3f4f5;
+        }
+        /* Zebra-striping for lists per guidelines */
+        .zebra-list-item:nth-child(even) { background-color: #f8f9fa; }
+        .zebra-list-item:nth-child(odd) { background-color: #ffffff; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed": "#e0e3e8",
+                        "on-secondary-fixed": "#181c20",
+                        "inverse-primary": "#82d3de",
+                        "on-tertiary-container": "#ffd7bd",
+                        "primary-container": "#006d77",
+                        "surface-bright": "#f8f9fa",
+                        "primary": "#00535b",
+                        "tertiary-container": "#8e5426",
+                        "outline-variant": "#bec8ca",
+                        "surface-container": "#edeeef",
+                        "primary-fixed-dim": "#82d3de",
+                        "on-primary-fixed-variant": "#004f56",
+                        "primary-fixed": "#9ff0fb",
+                        "error": "#ba1a1a",
+                        "surface-container-lowest": "#ffffff",
+                        "on-background": "#191c1d",
+                        "tertiary-fixed": "#ffdcc5",
+                        "tertiary": "#713d10",
+                        "secondary": "#5b5f63",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#ffb783",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#e1e3e4",
+                        "surface-container-low": "#f3f4f5",
+                        "background": "#f8f9fa",
+                        "surface": "#f8f9fa",
+                        "on-tertiary-fixed-variant": "#6d390c",
+                        "on-surface-variant": "#3e494a",
+                        "on-secondary-fixed-variant": "#43474c",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed": "#001f23",
+                        "outline": "#6f797a",
+                        "on-tertiary-fixed": "#301400",
+                        "secondary-fixed-dim": "#c3c7cc",
+                        "inverse-surface": "#2e3132",
+                        "secondary-container": "#dde0e5",
+                        "surface-tint": "#006972",
+                        "surface-container-high": "#e7e8e9",
+                        "surface-container-highest": "#e1e3e4",
+                        "on-secondary-container": "#5f6368",
+                        "on-primary-container": "#9becf7",
+                        "surface-dim": "#d9dadb",
+                        "inverse-on-surface": "#f0f1f2",
+                        "on-primary": "#ffffff",
+                        "on-surface": "#191c1d",
+                        "on-error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "8px",
+                        "stack-md": "16px",
+                        "unit": "4px",
+                        "margin-desktop": "24px",
+                        "gutter": "12px",
+                        "touch-target-min": "44px"
+                    },
+                    "fontFamily": {
+                        "body-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-lg": ["Inter"],
+                        "headline-md": ["Outfit"],
+                        "display-lg": ["Outfit"],
+                        "headline-sm": ["Outfit"],
+                        "label-md": ["Inter"],
+                        "headline-lg": ["Outfit"],
+                        "data-mono": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                        "data-mono": ["16px", {"lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "500"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-40 bg-surface dark:bg-surface-dim border-b border-outline-variant dark:border-outline flex items-center justify-between px-margin-desktop h-14 w-full">
+<div class="flex items-center gap-stack-md">
+<span class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">QuickServe POS</span>
+<div class="ml-gutter flex items-center bg-surface-container-low px-stack-md py-1 rounded-lg">
+<span class="material-symbols-outlined text-on-surface-variant mr-2">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-label-md font-label-md w-64" placeholder="Search settings..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-gutter">
+<button class="material-symbols-outlined text-on-surface-variant p-2 rounded-full hover:bg-surface-container-high transition-colors">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant p-2 rounded-full hover:bg-surface-container-high transition-colors">store</button>
+<button class="material-symbols-outlined text-on-surface-variant p-2 rounded-full hover:bg-surface-container-high transition-colors">schedule</button>
+<div class="h-8 w-[1px] bg-outline-variant mx-2"></div>
+<div class="flex items-center gap-stack-sm">
+<div class="text-right">
+<p class="font-label-lg text-label-lg">Alex Chen</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Admin</p>
+</div>
+<img class="h-9 w-9 rounded-full object-cover" data-alt="A professional headshot of a male restaurant manager in a clean white shirt, smiling confidently in a modern, brightly lit office environment. The background is softly blurred with hints of high-end restaurant décor, maintaining a professional and reliable corporate modern aesthetic with warm, natural lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDs38pEh04IAHY2D32QBjfNwY2XDehqcx4SXbUoml1jGcVriSs9lFu0ehRFxbgoqmAvUuBK9x8A4VocpxtjBxbauKKHWu75U8Gkw5OuK9syIMOJ4tHyjAs8KjFYt6QOpZejyYi6CUzFonrxDaPz29A7YNdq7VjZ5PHbWW9Qy3YRAtEXwYp9TO_EtHHB6xY42JD9xlaFHNzSYF0bEI2TkJiCY3daHY3Gc1fznenV4z1hlsNfvR7cnzPw4Wpwk1uTFxgTJ-47d_-YLENC"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full w-64 z-50 bg-surface-container dark:bg-inverse-surface flex flex-col py-4 gap-stack-sm">
+<div class="px-6 mb-stack-md">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Main Terminal</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Station 01</p>
+</div>
+<nav class="flex-1 px-2 space-y-1">
+<a class="flex items-center px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-lg mx-2 transition-transform duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined mr-3">dashboard</span>
+<span class="font-label-lg text-label-lg">Dashboard</span>
+</a>
+<a class="flex items-center px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-lg mx-2 transition-transform duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined mr-3">receipt_long</span>
+<span class="font-label-lg text-label-lg">Orders</span>
+</a>
+<a class="flex items-center px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-lg mx-2 transition-transform duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined mr-3">restaurant_menu</span>
+<span class="font-label-lg text-label-lg">Menu Manager</span>
+</a>
+<a class="flex items-center px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-lg mx-2 transition-transform duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined mr-3">inventory_2</span>
+<span class="font-label-lg text-label-lg">Stock</span>
+</a>
+<a class="flex items-center px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-lg mx-2 transition-transform duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined mr-3">assessment</span>
+<span class="font-label-lg text-label-lg">Reports</span>
+</a>
+<!-- Active State: Settings -->
+<a class="flex items-center px-4 py-3 bg-primary text-on-primary rounded-lg mx-2 transition-transform duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined mr-3">settings</span>
+<span class="font-label-lg text-label-lg">Settings</span>
+</a>
+</nav>
+<div class="px-6 mt-auto">
+<div class="bg-surface-variant/30 rounded-lg p-stack-sm border border-outline-variant">
+<p class="font-label-md text-label-md text-on-surface-variant">v2.4.12 Build 88</p>
+<div class="flex items-center text-primary mt-1">
+<span class="material-symbols-outlined text-[14px] mr-1">cloud_done</span>
+<span class="text-[12px] font-medium">Cloud Synced</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 pt-14 min-h-screen">
+<div class="max-w-6xl mx-auto p-margin-desktop grid grid-cols-12 gap-gutter">
+<!-- Left Navigation / Categories -->
+<div class="col-span-3">
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden">
+<div class="p-stack-md border-b border-outline-variant">
+<h3 class="font-headline-sm text-headline-sm">Settings</h3>
+</div>
+<nav class="flex flex-col py-stack-sm">
+<button class="flex items-center px-stack-md py-stack-md hover:bg-surface-container-low text-left active-tab" data-nav="business" onclick="scrollToSection('business')">
+<span class="material-symbols-outlined mr-3 text-primary">storefront</span>
+<span class="font-label-lg text-label-lg">Business Profile</span>
+</button>
+<button class="flex items-center px-stack-md py-stack-md hover:bg-surface-container-low text-left" data-nav="branding" onclick="scrollToSection('branding')">
+<span class="material-symbols-outlined mr-3 text-on-surface-variant">palette</span>
+<span class="font-label-lg text-label-lg">Branding</span>
+</button>
+<button class="flex items-center px-stack-md py-stack-md hover:bg-surface-container-low text-left" data-nav="terminal" onclick="scrollToSection('terminal')">
+<span class="material-symbols-outlined mr-3 text-on-surface-variant">point_of_sale</span>
+<span class="font-label-lg text-label-lg">Terminal Prefs</span>
+</button>
+<button class="flex items-center px-stack-md py-stack-md hover:bg-surface-container-low text-left" data-nav="security" onclick="scrollToSection('security')">
+<span class="material-symbols-outlined mr-3 text-on-surface-variant">shield_person</span>
+<span class="font-label-lg text-label-lg">User &amp; Security</span>
+</button>
+<button class="flex items-center px-stack-md py-stack-md hover:bg-surface-container-low text-left" data-nav="system" onclick="scrollToSection('system')">
+<span class="material-symbols-outlined mr-3 text-on-surface-variant">info</span>
+<span class="font-label-lg text-label-lg">System Info</span>
+</button>
+</nav>
+</div>
+</div>
+<!-- Settings Sections -->
+<div class="col-span-9 space-y-gutter pb-24">
+<!-- Business Profile -->
+<section class="bg-surface-container-lowest rounded-xl border border-outline-variant p-stack-md" id="business">
+<div class="flex justify-between items-center mb-stack-md">
+<h3 class="font-headline-sm text-headline-sm">Business Profile</h3>
+<button class="bg-primary text-on-primary px-4 py-2 rounded-lg font-label-lg hover:opacity-90 active:scale-95 transition-all">Save Changes</button>
+</div>
+<div class="grid grid-cols-2 gap-stack-md">
+<div class="space-y-unit">
+<label class="font-label-md text-label-md text-on-surface-variant">Restaurant Name</label>
+<input class="w-full border-outline-variant rounded-lg focus:border-primary focus:ring-1 focus:ring-primary px-stack-md py-2 text-body-md font-body-md" type="text" value="QuickServe Downtown"/>
+</div>
+<div class="space-y-unit">
+<label class="font-label-md text-label-md text-on-surface-variant">Tax ID / Business Number</label>
+<input class="w-full border-outline-variant rounded-lg focus:border-primary focus:ring-1 focus:ring-primary px-stack-md py-2 text-body-md font-body-md" type="text" value="TX-9988112"/>
+</div>
+<div class="col-span-2 space-y-unit">
+<label class="font-label-md text-label-md text-on-surface-variant">Address</label>
+<input class="w-full border-outline-variant rounded-lg focus:border-primary focus:ring-1 focus:ring-primary px-stack-md py-2 text-body-md font-body-md" type="text" value="128 Market St, Suite 400, Financial District, CA 94105"/>
+</div>
+<div class="space-y-unit">
+<label class="font-label-md text-label-md text-on-surface-variant">Contact Email</label>
+<input class="w-full border-outline-variant rounded-lg focus:border-primary focus:ring-1 focus:ring-primary px-stack-md py-2 text-body-md font-body-md" type="email" value="ops@quickserve.com"/>
+</div>
+<div class="space-y-unit">
+<label class="font-label-md text-label-md text-on-surface-variant">Phone Number</label>
+<input class="w-full border-outline-variant rounded-lg focus:border-primary focus:ring-1 focus:ring-primary px-stack-md py-2 text-body-md font-body-md" type="text" value="+1 (555) 012-3456"/>
+</div>
+</div>
+</section>
+<!-- Branding & White-Labeling -->
+<section class="bg-surface-container-lowest rounded-xl border border-outline-variant p-stack-md" id="branding">
+<h3 class="font-headline-sm text-headline-sm mb-stack-md">Branding &amp; White-Labeling</h3>
+<div class="flex gap-margin-desktop">
+<div class="w-1/3">
+<label class="font-label-md text-label-md text-on-surface-variant block mb-stack-sm">Brand Logo</label>
+<div class="aspect-square rounded-xl border-2 border-dashed border-outline-variant flex flex-col items-center justify-center bg-surface-container-low cursor-pointer hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-4xl text-on-surface-variant">cloud_upload</span>
+<p class="text-body-sm font-body-sm mt-2 text-center px-4">Drag logo here or click to browse</p>
+</div>
+</div>
+<div class="flex-1 space-y-stack-md">
+<div>
+<label class="font-label-md text-label-md text-on-surface-variant block mb-stack-sm">Primary Accent Color</label>
+<div class="flex gap-stack-md">
+<button class="w-12 h-12 rounded-full ring-2 ring-offset-2 ring-primary bg-[#00535b]" title="Deep Teal (Default)"></button>
+<button class="w-12 h-12 rounded-full bg-[#ba1a1a]" title="Fast-Food Red"></button>
+<button class="w-12 h-12 rounded-full bg-[#1e293b]" title="Midnight Blue"></button>
+<button class="w-12 h-12 rounded-full bg-[#166534]" title="Eco Green"></button>
+<button class="w-12 h-12 rounded-full bg-surface-variant flex items-center justify-center border border-outline" title="Custom">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+<p class="text-body-sm text-on-surface-variant mt-stack-sm">Choose an accent that aligns with your restaurant's identity. Teal is reliable, Red drives appetite and urgency.</p>
+</div>
+<div class="pt-stack-md border-t border-outline-variant">
+<label class="font-label-md text-label-md text-on-surface-variant block mb-stack-sm">Receipt Customization</label>
+<textarea class="w-full border-outline-variant rounded-lg focus:border-primary focus:ring-1 focus:ring-primary px-stack-md py-2 text-body-md font-body-md" placeholder="Custom message at bottom of receipt (e.g., Thank you for dining with us!)" rows="3"></textarea>
+</div>
+</div>
+</div>
+</section>
+<!-- Terminal Preferences -->
+<section class="bg-surface-container-lowest rounded-xl border border-outline-variant p-stack-md" id="terminal">
+<h3 class="font-headline-sm text-headline-sm mb-stack-md">Terminal Preferences</h3>
+<div class="space-y-stack-md">
+<div class="flex items-center justify-between py-stack-sm border-b border-outline-variant">
+<div>
+<p class="font-label-lg text-label-lg">Auto-Print Receipt</p>
+<p class="text-body-sm text-on-surface-variant">Print receipt automatically after payment confirmation</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-secondary-fixed rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="flex items-center justify-between py-stack-sm border-b border-outline-variant">
+<div>
+<p class="font-label-lg text-label-lg">Sound Alerts</p>
+<p class="text-body-sm text-on-surface-variant">Play audio notification for new incoming orders</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-secondary-fixed rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="flex items-center justify-between py-stack-sm">
+<div>
+<p class="font-label-lg text-label-lg">Terminal Language</p>
+<p class="text-body-sm text-on-surface-variant">Primary display language for the operator interface</p>
+</div>
+<select class="border-outline-variant rounded-lg focus:ring-primary focus:border-primary font-label-md">
+<option>English (US)</option>
+<option>Spanish (LatAm)</option>
+<option>French (Canada)</option>
+<option>Chinese (Simplified)</option>
+</select>
+</div>
+</div>
+</section>
+<!-- User & Security -->
+<section class="bg-surface-container-lowest rounded-xl border border-outline-variant p-stack-md" id="security">
+<div class="flex justify-between items-center mb-stack-md">
+<h3 class="font-headline-sm text-headline-sm">User &amp; Security</h3>
+<button class="text-primary font-label-lg hover:underline flex items-center">
+<span class="material-symbols-outlined mr-1">add_circle</span> Add Staff
+                        </button>
+</div>
+<div class="border border-outline-variant rounded-lg overflow-hidden">
+<div class="bg-surface-container-high px-4 py-3 grid grid-cols-12 gap-gutter border-b border-outline-variant">
+<div class="col-span-5 font-label-md text-label-md text-on-surface-variant">Staff Member</div>
+<div class="col-span-3 font-label-md text-label-md text-on-surface-variant">Role</div>
+<div class="col-span-2 font-label-md text-label-md text-on-surface-variant">Status</div>
+<div class="col-span-2 text-right font-label-md text-label-md text-on-surface-variant">Actions</div>
+</div>
+<div class="divide-y divide-outline-variant">
+<div class="zebra-list-item px-4 py-3 grid grid-cols-12 gap-gutter items-center">
+<div class="col-span-5 flex items-center gap-stack-md">
+<div class="w-8 h-8 rounded-full bg-secondary-fixed flex items-center justify-center font-bold text-on-secondary-fixed">AC</div>
+<div>
+<p class="font-label-lg text-label-lg">Alex Chen</p>
+<p class="text-body-sm text-on-surface-variant">alex@quickserve.com</p>
+</div>
+</div>
+<div class="col-span-3 font-body-md">Administrator</div>
+<div class="col-span-2">
+<span class="px-2 py-1 bg-primary-container text-on-primary-container rounded-full text-[12px] font-bold">Active</span>
+</div>
+<div class="col-span-2 text-right">
+<button class="text-on-surface-variant hover:text-primary material-symbols-outlined">edit</button>
+</div>
+</div>
+<div class="zebra-list-item px-4 py-3 grid grid-cols-12 gap-gutter items-center">
+<div class="col-span-5 flex items-center gap-stack-md">
+<div class="w-8 h-8 rounded-full bg-tertiary-fixed flex items-center justify-center font-bold text-on-tertiary-fixed">JS</div>
+<div>
+<p class="font-label-lg text-label-lg">Jordan Smith</p>
+<p class="text-body-sm text-on-surface-variant">j.smith@quickserve.com</p>
+</div>
+</div>
+<div class="col-span-3 font-body-md">Manager</div>
+<div class="col-span-2">
+<span class="px-2 py-1 bg-primary-container text-on-primary-container rounded-full text-[12px] font-bold">Active</span>
+</div>
+<div class="col-span-2 text-right">
+<button class="text-on-surface-variant hover:text-primary material-symbols-outlined">edit</button>
+</div>
+</div>
+<div class="zebra-list-item px-4 py-3 grid grid-cols-12 gap-gutter items-center">
+<div class="col-span-5 flex items-center gap-stack-md">
+<div class="w-8 h-8 rounded-full bg-outline-variant flex items-center justify-center font-bold text-on-surface">DR</div>
+<div>
+<p class="font-label-lg text-label-lg">Dani Rivera</p>
+<p class="text-body-sm text-on-surface-variant">rivera_d@quickserve.com</p>
+</div>
+</div>
+<div class="col-span-3 font-body-md">Staff / Operator</div>
+<div class="col-span-2">
+<span class="px-2 py-1 bg-secondary-container text-on-secondary-container rounded-full text-[12px] font-bold">Shift-Only</span>
+</div>
+<div class="col-span-2 text-right">
+<button class="text-on-surface-variant hover:text-primary material-symbols-outlined">edit</button>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-stack-md pt-stack-md border-t border-outline-variant flex items-center justify-between">
+<div>
+<p class="font-label-lg text-label-lg">Administrative Security</p>
+<p class="text-body-sm text-on-surface-variant">Update your master terminal password</p>
+</div>
+<button class="border border-outline text-on-surface px-4 py-2 rounded-lg font-label-lg hover:bg-surface-variant active:scale-95 transition-all">Change Password</button>
+</div>
+</section>
+<!-- System Info -->
+<section class="bg-surface-container-lowest rounded-xl border border-outline-variant p-stack-md" id="system">
+<h3 class="font-headline-sm text-headline-sm mb-stack-md">System Info</h3>
+<div class="bg-surface-container-low rounded-lg p-stack-md border border-outline-variant grid grid-cols-3 gap-gutter">
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant">Software Version</p>
+<p class="font-data-mono text-data-mono mt-1">2.4.12-stable</p>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant">Last Cloud Sync</p>
+<p class="font-data-mono text-data-mono mt-1">Today, 14:22:01</p>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant">Connectivity Status</p>
+<div class="flex items-center text-primary mt-1">
+<span class="w-2 h-2 rounded-full bg-primary mr-2 animate-pulse"></span>
+<p class="font-data-mono text-data-mono">Active (18ms latency)</p>
+</div>
+</div>
+</div>
+<div class="mt-stack-md flex gap-stack-md">
+<button class="bg-surface-variant text-on-surface px-4 py-2 rounded-lg font-label-lg hover:bg-outline-variant transition-colors flex items-center">
+<span class="material-symbols-outlined mr-2">system_update</span> Check for Updates
+                        </button>
+<button class="bg-surface-variant text-on-surface px-4 py-2 rounded-lg font-label-lg hover:bg-outline-variant transition-colors flex items-center">
+<span class="material-symbols-outlined mr-2">bug_report</span> Export Logs
+                        </button>
+<button class="ml-auto text-error font-label-lg flex items-center hover:bg-error-container/20 px-4 py-2 rounded-lg transition-colors">
+<span class="material-symbols-outlined mr-2">restart_alt</span> Factory Reset Terminal
+                        </button>
+</div>
+</section>
+</div>
+</div>
+</main>
+<script>
+        function scrollToSection(id) {
+            const element = document.getElementById(id);
+            const headerOffset = 80;
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: "smooth"
+            });
+
+            // Update active state in nav
+            document.querySelectorAll('[data-nav]').forEach(btn => {
+                btn.classList.remove('active-tab');
+                const icon = btn.querySelector('.material-symbols-outlined');
+                icon.classList.remove('text-primary');
+                icon.classList.add('text-on-surface-variant');
+            });
+            const activeBtn = document.querySelector(`[data-nav="${id}"]`);
+            activeBtn.classList.add('active-tab');
+            const activeIcon = activeBtn.querySelector('.material-symbols-outlined');
+            activeIcon.classList.remove('text-on-surface-variant');
+            activeIcon.classList.add('text-primary');
+        }
+
+        // Color picker interaction
+        document.querySelectorAll('.rounded-full[title]').forEach(picker => {
+            picker.addEventListener('click', function() {
+                document.querySelectorAll('.rounded-full[title]').forEach(p => p.classList.remove('ring-2', 'ring-offset-2', 'ring-primary'));
+                this.classList.add('ring-2', 'ring-offset-2', 'ring-primary');
+            });
+        });
+
+        // Simple intersection observer to update nav on scroll
+        const observerOptions = {
+            root: null,
+            rootMargin: '-10% 0px -80% 0px',
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.id;
+                    document.querySelectorAll('[data-nav]').forEach(btn => {
+                        btn.classList.toggle('active-tab', btn.getAttribute('data-nav') === id);
+                        const icon = btn.querySelector('.material-symbols-outlined');
+                        if(btn.getAttribute('data-nav') === id) {
+                            icon.classList.remove('text-on-surface-variant');
+                            icon.classList.add('text-primary');
+                        } else {
+                            icon.classList.remove('text-primary');
+                            icon.classList.add('text-on-surface-variant');
+                        }
+                    });
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section[id]').forEach(section => observer.observe(section));
+    </script>
+</body></html>

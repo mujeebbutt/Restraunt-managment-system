@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&amp;family=Inter:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #dee2e6;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #bec8ca;
+        }
+        .active-category {
+            background-color: #006d77;
+            color: white;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed-dim": "#ffb783",
+                        "surface-container-high": "#e7e8e9",
+                        "surface-bright": "#f8f9fa",
+                        "surface-variant": "#e1e3e4",
+                        "tertiary-container": "#8e5426",
+                        "surface": "#f8f9fa",
+                        "secondary-fixed-dim": "#c3c7cc",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed": "#181c20",
+                        "inverse-primary": "#82d3de",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed-dim": "#82d3de",
+                        "on-primary-container": "#9becf7",
+                        "background": "#f8f9fa",
+                        "surface-tint": "#006972",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "on-tertiary-container": "#ffd7bd",
+                        "error": "#ba1a1a",
+                        "surface-container": "#edeeef",
+                        "surface-container-low": "#f3f4f5",
+                        "on-secondary-container": "#5f6368",
+                        "outline-variant": "#bec8ca",
+                        "on-tertiary-fixed": "#301400",
+                        "on-surface": "#191c1d",
+                        "tertiary": "#713d10",
+                        "on-surface-variant": "#3e494a",
+                        "on-secondary-fixed-variant": "#43474c",
+                        "primary-fixed": "#9ff0fb",
+                        "secondary-container": "#dde0e5",
+                        "primary": "#00535b",
+                        "on-tertiary-fixed-variant": "#6d390c",
+                        "on-background": "#191c1d",
+                        "secondary": "#5b5f63",
+                        "primary-container": "#006d77",
+                        "on-primary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "surface-dim": "#d9dadb",
+                        "on-primary-fixed-variant": "#004f56",
+                        "secondary-fixed": "#e0e3e8",
+                        "inverse-on-surface": "#f0f1f2",
+                        "outline": "#6f797a",
+                        "inverse-surface": "#2e3132",
+                        "tertiary-fixed": "#ffdcc5",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed": "#001f23",
+                        "surface-container-highest": "#e1e3e4"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "touch-target-min": "44px",
+                        "gutter": "12px",
+                        "stack-md": "16px",
+                        "unit": "4px",
+                        "margin-desktop": "24px",
+                        "stack-sm": "8px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Outfit"],
+                        "display-lg": ["Outfit"],
+                        "body-sm": ["Inter"],
+                        "headline-sm": ["Outfit"],
+                        "label-md": ["Inter"],
+                        "data-mono": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Outfit"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                        "data-mono": ["16px", {"lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen">
+<!-- TopAppBar Shell -->
+<header class="fixed top-0 w-full z-40 bg-surface border-b border-outline-variant flex items-center justify-between px-margin-desktop h-14 w-full">
+<div class="flex items-center gap-stack-md">
+<span class="font-headline-md text-headline-md font-bold text-primary">QuickServe POS</span>
+<div class="hidden md:flex items-center ml-8 gap-stack-md">
+<span class="font-label-md text-label-md text-primary font-bold">Menu Manager</span>
+</div>
+</div>
+<div class="flex items-center gap-gutter">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+<input class="bg-surface-container-low border-none rounded-full pl-10 pr-4 py-1.5 text-body-sm w-64 focus:ring-2 focus:ring-primary" placeholder="Search menu..." type="text"/>
+</div>
+<button class="p-2 rounded-full hover:bg-surface-container-high transition-colors active:opacity-80">
+<span class="material-symbols-outlined text-primary">notifications</span>
+</button>
+<button class="p-2 rounded-full hover:bg-surface-container-high transition-colors active:opacity-80">
+<span class="material-symbols-outlined text-primary">store</span>
+</button>
+<button class="p-2 rounded-full hover:bg-surface-container-high transition-colors active:opacity-80">
+<span class="material-symbols-outlined text-primary">schedule</span>
+</button>
+</div>
+</header>
+<!-- SideNavBar Shell -->
+<aside class="fixed left-0 top-0 h-full w-64 z-50 bg-surface-container py-4 flex flex-col gap-stack-sm border-r border-outline-variant">
+<div class="px-6 mb-6">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Main Terminal</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Station 01</p>
+</div>
+<nav class="flex flex-col gap-unit">
+<a class="flex items-center gap-3 px-4 py-3 mx-2 text-on-surface-variant hover:bg-surface-variant rounded-lg transition-transform active:scale-95" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-lg text-label-lg">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 mx-2 text-on-surface-variant hover:bg-surface-variant rounded-lg transition-transform active:scale-95" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-label-lg text-label-lg">Orders</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 mx-2 bg-primary text-on-primary rounded-lg transition-transform active:scale-95" href="#">
+<span class="material-symbols-outlined">restaurant_menu</span>
+<span class="font-label-lg text-label-lg">Menu Manager</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 mx-2 text-on-surface-variant hover:bg-surface-variant rounded-lg transition-transform active:scale-95" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-lg text-label-lg">Stock</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 mx-2 text-on-surface-variant hover:bg-surface-variant rounded-lg transition-transform active:scale-95" href="#">
+<span class="material-symbols-outlined">assessment</span>
+<span class="font-label-lg text-label-lg">Reports</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 mx-2 text-on-surface-variant hover:bg-surface-variant rounded-lg transition-transform active:scale-95" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-lg text-label-lg">Settings</span>
+</a>
+</nav>
+<div class="mt-auto px-4">
+<div class="flex items-center gap-3 p-3 bg-surface-container-low rounded-xl">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary">person</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Alex Chen</p>
+<p class="text-[10px] uppercase tracking-wider text-on-surface-variant">Manager</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 mt-14 p-gutter grid grid-cols-12 gap-gutter h-[calc(100vh-3.5rem)] overflow-hidden">
+<!-- Left Section: Menu Categories -->
+<section class="col-span-3 bg-white rounded-lg border border-outline-variant flex flex-col overflow-hidden">
+<div class="p-4 border-b border-outline-variant flex items-center justify-between">
+<h3 class="font-headline-sm text-headline-sm">Categories</h3>
+<button class="w-8 h-8 rounded-full bg-primary-fixed-dim text-primary flex items-center justify-center hover:bg-primary-fixed transition-colors active:scale-90">
+<span class="material-symbols-outlined text-[20px]">add</span>
+</button>
+</div>
+<div class="flex-1 overflow-y-auto p-2 flex flex-col gap-unit">
+<button class="flex items-center justify-between p-3 rounded-lg bg-primary-container text-on-primary-container group transition-all">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined" data-weight="fill">lunch_dining</span>
+<span class="font-label-lg text-label-lg">Burgers</span>
+</div>
+<span class="bg-primary text-on-primary px-2 py-0.5 rounded-full text-[10px]">12</span>
+</button>
+<button class="flex items-center justify-between p-3 rounded-lg hover:bg-surface-container-high text-on-surface-variant transition-all">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined">local_pizza</span>
+<span class="font-label-lg text-label-lg">Pizzas</span>
+</div>
+<span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[10px]">8</span>
+</button>
+<button class="flex items-center justify-between p-3 rounded-lg hover:bg-surface-container-high text-on-surface-variant transition-all">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined">fastfood</span>
+<span class="font-label-lg text-label-lg">Sides</span>
+</div>
+<span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[10px]">15</span>
+</button>
+<button class="flex items-center justify-between p-3 rounded-lg hover:bg-surface-container-high text-on-surface-variant transition-all">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined">local_drink</span>
+<span class="font-label-lg text-label-lg">Drinks</span>
+</div>
+<span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[10px]">22</span>
+</button>
+<button class="flex items-center justify-between p-3 rounded-lg hover:bg-surface-container-high text-on-surface-variant transition-all">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined">icecream</span>
+<span class="font-label-lg text-label-lg">Desserts</span>
+</div>
+<span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full text-[10px]">6</span>
+</button>
+</div>
+<div class="p-4 bg-surface-container-low">
+<button class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg border-2 border-dashed border-outline text-on-surface-variant font-label-lg hover:bg-white hover:border-primary transition-all">
+<span class="material-symbols-outlined">create_new_folder</span>
+                    Add Category
+                </button>
+</div>
+</section>
+<!-- Right Section: Items Grid -->
+<section class="col-span-9 flex flex-col gap-gutter overflow-hidden">
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<h2 class="font-headline-md text-headline-md text-primary">Burgers</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">12 items in this category</p>
+</div>
+<button class="flex items-center gap-2 bg-primary text-on-primary px-6 py-3 rounded-lg font-label-lg shadow-sm hover:opacity-90 active:scale-95 transition-all">
+<span class="material-symbols-outlined">add_circle</span>
+                    Add New Item
+                </button>
+</div>
+<!-- Items Canvas -->
+<div class="flex-1 bg-white rounded-lg border border-outline-variant overflow-y-auto p-gutter">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Item Card 1 -->
+<div class="group border border-outline-variant rounded-xl overflow-hidden hover:shadow-md transition-shadow flex flex-col">
+<div class="h-40 overflow-hidden relative">
+<img alt="Zinger Burger" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A macro photography shot of a gourmet zinger burger with crispy fried chicken, melting cheddar cheese, and fresh lettuce. The lighting is soft and warm, typical of a high-end restaurant menu photoshoot. The background is a clean, neutral kitchen setting, focusing entirely on the vibrant textures and colors of the food. The overall aesthetic is professional, sharp, and appetizing." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIOHr2Xe-H3ABH_qS7Ip0NFD4RPPlVj7q_c1aEkpTxVR6VDJgkUCcEhKBo5mOeJMzqofKK5CiPmQdrPkLmWmGJwkrNvVkpK72sru8pDDvBZMA9sYigMqOX815rwGKh278JFJG_cWey5-unMJbeIMFY6PbnWTpjvZU_vMnPCAOkSBvk3RLk5C94Dgcln0uvnIEUDabUJjD0epMLGlfYzQa0yFoeCNFc4yEvylbEmyhezLRu1oVYb2jvHaYg-RzH0oyF5wrefDpOqNzU"/>
+<div class="absolute top-2 right-2 bg-white/90 backdrop-blur-sm px-2 py-1 rounded text-primary font-bold text-label-md">
+                                $8.50
+                            </div>
+</div>
+<div class="p-4 flex flex-col gap-stack-sm">
+<div class="flex justify-between items-start">
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Zinger Burger</h4>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">Crispy chicken breast, spicy mayo, lettuce, and toasted brioche bun.</p>
+<div class="flex items-center justify-between mt-2 pt-3 border-t border-outline-variant">
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md text-on-surface-variant">In Stock</span>
+<button class="w-9 h-5 rounded-full bg-primary relative transition-colors duration-200" onclick="this.classList.toggle('bg-primary'); this.classList.toggle('bg-outline'); this.children[0].classList.toggle('translate-x-4')">
+<div class="w-3 h-3 bg-white rounded-full absolute top-1 left-1 translate-x-4 transition-transform duration-200"></div>
+</button>
+</div>
+<button class="flex items-center gap-1 text-primary hover:bg-primary-fixed-dim px-3 py-1.5 rounded-lg transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+<span class="font-label-md text-label-md">Edit</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Item Card 2 -->
+<div class="group border border-outline-variant rounded-xl overflow-hidden hover:shadow-md transition-shadow flex flex-col">
+<div class="h-40 overflow-hidden relative">
+<img alt="Double Cheeseburger" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A studio photograph of a classic double cheeseburger with two juicy beef patties, thick layers of melted american cheese, pickles, and onions. The burger is centered on a clean white surface with bright, crisp lighting that highlights the glossy bun. The color palette is warm and natural, emphasizing the rich browns and yellows of the burger. Professional culinary styling makes every ingredient look fresh and perfectly placed." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0y-6D7TQciGeSgOnWdQ9wTJ5fxRPZfsjqz2AWjTXYG3JC9IFOQxWKSJv_y0VcmptbeUjqKuZJWwrWMCtRUT6iV8Uv46vbN6OA02lkxSI_nC0hw1EJj9bzN1L-W0oWlgPs5H7sjEqKxget-mwJq_fpQx988rN0kERPben64d5EQ6PFRgWP-dkWR9NZU6Dn6lmJKeBnPS-OzuvtoLl7a6C715zQQIgmrcXgH_23u_pXhYVvwQxUGGtFg0Eb6Yyrn5QCj2hFmV-HTa4o"/>
+<div class="absolute top-2 right-2 bg-white/90 backdrop-blur-sm px-2 py-1 rounded text-primary font-bold text-label-md">
+                                $12.90
+                            </div>
+</div>
+<div class="p-4 flex flex-col gap-stack-sm">
+<div class="flex justify-between items-start">
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Double Smash</h4>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">Two 100% beef patties, double American cheese, caramelized onions.</p>
+<div class="flex items-center justify-between mt-2 pt-3 border-t border-outline-variant">
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md text-on-surface-variant">In Stock</span>
+<button class="w-9 h-5 rounded-full bg-primary relative transition-colors duration-200" onclick="this.classList.toggle('bg-primary'); this.classList.toggle('bg-outline'); this.children[0].classList.toggle('translate-x-4')">
+<div class="w-3 h-3 bg-white rounded-full absolute top-1 left-1 translate-x-4 transition-transform duration-200"></div>
+</button>
+</div>
+<button class="flex items-center gap-1 text-primary hover:bg-primary-fixed-dim px-3 py-1.5 rounded-lg transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+<span class="font-label-md text-label-md">Edit</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Item Card 3 -->
+<div class="group border border-outline-variant rounded-xl overflow-hidden hover:shadow-md transition-shadow flex flex-col opacity-60">
+<div class="h-40 overflow-hidden relative grayscale">
+<img alt="Veggie Burger" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A professional food photograph of a vibrant veggie burger featuring a chickpea and quinoa patty, sliced avocado, and alfalfa sprouts on a multigrain bun. The lighting is natural and bright, suggesting a fresh and healthy menu option. The background is a softly blurred wooden table, adding a rustic and organic feel to the composition. The styling is neat and contemporary, with high-key lighting for a clean light-mode look." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBG9X4ZHJB6_36Yg23hns6onhZWYcrODu_-63vpej74ThVksBI-zhCp2Jk5R7D3oLc9TizsdfaiBdvgPqSe3F0pWNtjX7CwKUBqvyOWHbf9TZkq16LKlwfNahWBlkCRagznMWXr2ApFjUoM2PixK6JBg8VncblyFavtYynq19yQxNHvM-BrrF-j77bZfg-_HL1Bu-YVYJVlw8jQf3EMMxV7-vuZHkQ8t9_rSNtC_rDFkDB6am-it2yMJjHHWb9y7Zx1Znvz03GWNKP2"/>
+<div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+<span class="bg-white px-3 py-1 rounded-full text-error font-bold text-[12px] uppercase">Out of Stock</span>
+</div>
+</div>
+<div class="p-4 flex flex-col gap-stack-sm">
+<div class="flex justify-between items-start">
+<h4 class="font-headline-sm text-headline-sm text-on-surface">The Garden Burger</h4>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">Plant-based patty, avocado, sprouts, and herb aioli.</p>
+<div class="flex items-center justify-between mt-2 pt-3 border-t border-outline-variant">
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md text-on-surface-variant">In Stock</span>
+<button class="w-9 h-5 rounded-full bg-outline relative transition-colors duration-200" onclick="this.classList.toggle('bg-primary'); this.classList.toggle('bg-outline'); this.children[0].classList.toggle('translate-x-4')">
+<div class="w-3 h-3 bg-white rounded-full absolute top-1 left-1 transition-transform duration-200"></div>
+</button>
+</div>
+<button class="flex items-center gap-1 text-primary hover:bg-primary-fixed-dim px-3 py-1.5 rounded-lg transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+<span class="font-label-md text-label-md">Edit</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Item Card 4 -->
+<div class="group border border-outline-variant rounded-xl overflow-hidden hover:shadow-md transition-shadow flex flex-col">
+<div class="h-40 overflow-hidden relative">
+<img alt="Spicy Jalapeño" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="An intense food photograph of a spicy jalapeño burger, with liquid cheese dripping over the sides and grilled jalapeños spilling out. The image uses dramatic, directional lighting to create deep shadows and bright highlights, emphasizing the textures of the charred beef and fresh peppers. The background is dark and moody, creating a professional and high-contrast appearance that fits a modern culinary brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-DjD13CkKBl8hx2lQOrHfLHkw4Z0wr2DUqZv9JRfoMsx4ERLfIru0Rf0c0c8nyolDMUdzIVB4Rb_yEnmBp4cDaJhO9cTnCWfcp3VkvdCYXIr_ijAU9OLCH0fkvOdLpEyrE7WeuhSFYamuujgajovSY7JCKq01E-vq_uDh1FagKeaJTIFkmOZc6lSDJ5CkRMS1y15kjl_fhx0tA_-YGE5ymY3ja-mZIwJT3cJb_TQKqEXkGNlZOnHE4ZBSHuQuFbFkjKo-2_TXU4uV"/>
+<div class="absolute top-2 right-2 bg-white/90 backdrop-blur-sm px-2 py-1 rounded text-primary font-bold text-label-md">
+                                $10.50
+                            </div>
+</div>
+<div class="p-4 flex flex-col gap-stack-sm">
+<div class="flex justify-between items-start">
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Jalapeño Heat</h4>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">Angus beef, grilled jalapeños, pepper jack, and sriracha bun.</p>
+<div class="flex items-center justify-between mt-2 pt-3 border-t border-outline-variant">
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md text-on-surface-variant">In Stock</span>
+<button class="w-9 h-5 rounded-full bg-primary relative transition-colors duration-200" onclick="this.classList.toggle('bg-primary'); this.classList.toggle('bg-outline'); this.children[0].classList.toggle('translate-x-4')">
+<div class="w-3 h-3 bg-white rounded-full absolute top-1 left-1 translate-x-4 transition-transform duration-200"></div>
+</button>
+</div>
+<button class="flex items-center gap-1 text-primary hover:bg-primary-fixed-dim px-3 py-1.5 rounded-lg transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+<span class="font-label-md text-label-md">Edit</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Item Card 5 -->
+<div class="group border border-outline-variant rounded-xl overflow-hidden hover:shadow-md transition-shadow flex flex-col">
+<div class="h-40 overflow-hidden relative">
+<img alt="Bacon Burger" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A commercial-quality food photograph of a stack of three thick-cut bacon strips layered on top of a juicy beef patty with melted swiss cheese. The scene is lit with bright, diffused studio light to highlight the crispy edges of the bacon and the melting cheese. The background is a clean white marble countertop, giving it a premium and modern retail feel. Every element is sharp and clear, intended for high-resolution menu displays." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQG-TZU1qgoFhlxdMY0SEGxQ1f2srKHW0lIx8ir82ytOXIj3-eCpoYj9kYTBlDb129xsmoMHk5Mkr7Jrz_MT_O_O5R7qiqFyDvqWv1hc84K9IzAeEE16HowgRwzvAwqud06dp3-nYGD6oG9Pxm07hX3e5UxwRAkXaBl2fUj-4Wyj6HgEQlRl6nKAOPjTWDVVhRQM3lOoPt_WrYmW3Q3u5IrxJfQj2OSY5NuGRO9SHB4HwYmvudK2ShKjPBYz6RpImdEtMA5L8eA7rx"/>
+<div class="absolute top-2 right-2 bg-white/90 backdrop-blur-sm px-2 py-1 rounded text-primary font-bold text-label-md">
+                                $14.00
+                            </div>
+</div>
+<div class="p-4 flex flex-col gap-stack-sm">
+<div class="flex justify-between items-start">
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Triple Bacon Bliss</h4>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">Triple layer of applewood smoked bacon, swiss cheese, garlic butter.</p>
+<div class="flex items-center justify-between mt-2 pt-3 border-t border-outline-variant">
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md text-on-surface-variant">In Stock</span>
+<button class="w-9 h-5 rounded-full bg-primary relative transition-colors duration-200" onclick="this.classList.toggle('bg-primary'); this.classList.toggle('bg-outline'); this.children[0].classList.toggle('translate-x-4')">
+<div class="w-3 h-3 bg-white rounded-full absolute top-1 left-1 translate-x-4 transition-transform duration-200"></div>
+</button>
+</div>
+<button class="flex items-center gap-1 text-primary hover:bg-primary-fixed-dim px-3 py-1.5 rounded-lg transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+<span class="font-label-md text-label-md">Edit</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Placeholder for adding new -->
+<button class="border-2 border-dashed border-outline-variant rounded-xl flex flex-col items-center justify-center gap-2 text-on-surface-variant hover:bg-surface-container-low hover:border-primary transition-all group p-8">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center group-hover:bg-primary-container group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[32px]">add</span>
+</div>
+<span class="font-label-lg text-label-lg">Quick Add Item</span>
+</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Overlay for Modal Simulation (hidden by default) -->
+<div class="hidden fixed inset-0 z-[100] bg-black/40 backdrop-blur-sm flex items-center justify-center p-gutter" id="item-modal">
+<div class="bg-white w-full max-w-2xl rounded-xl shadow-2xl overflow-hidden flex flex-col">
+<div class="p-6 border-b border-outline-variant flex items-center justify-between">
+<h3 class="font-headline-md text-headline-md">Add New Menu Item</h3>
+<button class="p-2 hover:bg-surface-container-high rounded-full transition-colors" onclick="toggleModal()">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="p-6 grid grid-cols-2 gap-6">
+<div class="col-span-2 md:col-span-1">
+<label class="block font-label-lg text-label-lg mb-2">Item Name</label>
+<input class="w-full border border-outline-variant rounded-lg p-2.5 focus:ring-2 focus:ring-primary focus:border-primary outline-none" placeholder="e.g. Gourmet Pizza" type="text"/>
+</div>
+<div class="col-span-2 md:col-span-1">
+<label class="block font-label-lg text-label-lg mb-2">Price ($)</label>
+<input class="w-full border border-outline-variant rounded-lg p-2.5 focus:ring-2 focus:ring-primary focus:border-primary outline-none" placeholder="0.00" type="number"/>
+</div>
+<div class="col-span-2">
+<label class="block font-label-lg text-label-lg mb-2">Description</label>
+<textarea class="w-full border border-outline-variant rounded-lg p-2.5 focus:ring-2 focus:ring-primary focus:border-primary outline-none" placeholder="Briefly describe the item ingredients..." rows="3"></textarea>
+</div>
+<div class="col-span-2">
+<div class="border-2 border-dashed border-outline-variant rounded-xl p-8 flex flex-col items-center justify-center gap-2 bg-surface-container-low">
+<span class="material-symbols-outlined text-[40px] text-on-surface-variant">upload_file</span>
+<p class="font-label-lg">Drag and drop item image or <span class="text-primary underline cursor-pointer">browse</span></p>
+</div>
+</div>
+</div>
+<div class="p-6 bg-surface-container-low border-t border-outline-variant flex justify-end gap-stack-md">
+<button class="px-6 py-2.5 font-label-lg text-on-surface hover:bg-surface-variant rounded-lg transition-colors" onclick="toggleModal()">Cancel</button>
+<button class="px-8 py-2.5 font-label-lg bg-primary text-on-primary rounded-lg shadow-sm hover:opacity-90 active:scale-95 transition-all">Save Item</button>
+</div>
+</div>
+</div>
+<script>
+        function toggleModal() {
+            const modal = document.getElementById('item-modal');
+            modal.classList.toggle('hidden');
+        }
+
+        // Add event listener to the main "Add New Item" button
+        document.querySelector('button.bg-primary.text-on-primary.px-6').addEventListener('click', toggleModal);
+
+        // Simple search interaction highlight
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('focus', () => {
+            searchInput.parentElement.classList.add('ring-2', 'ring-primary');
+        });
+        searchInput.addEventListener('blur', () => {
+            searchInput.parentElement.classList.remove('ring-2', 'ring-primary');
+        });
+
+        // Toggle micro-interaction for item cards stock status
+        // (already handled in-line for demonstration)
+    </script>
+</body></html>

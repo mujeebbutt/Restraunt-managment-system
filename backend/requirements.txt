@@ -1,0 +1,14 @@
+fastapi
+uvicorn[standard]
+sqlalchemy
+alembic
+python-dotenv
+pillow
+reportlab
+openpyxl
+python-escpos
+google-api-python-client
+google-auth-oauthlib
+websockets
+python-multipart
+aiofiles

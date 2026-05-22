@@ -1,0 +1,41 @@
+# ==========================================
+# Root / System / OS Ignored Files
+# ==========================================
+.DS_Store
+Thumbs.db
+*.log
+project_structure.txt
+ChatGPT Image *
+
+# ==========================================
+# Frontend (React / Vite / Node)
+# ==========================================
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.local
+frontend/.env.*.local
+
+# ==========================================
+# Backend (Python / FastAPI / SQLite)
+# ==========================================
+**/__pycache__/
+*.pyc
+backend/.env
+backend/restaurant.db
+
+# Ignore generated business data but keep the folders intact
+backend/invoices/*
+backend/backups/*
+backend/uploads/*
+
+# Allow tracking of the empty folders via .gitkeep
+!backend/invoices/.gitkeep
+!backend/backups/.gitkeep
+!backend/uploads/.gitkeep
+
+# ==========================================
+# Electron / Packaging Caches
+# ==========================================
+electron/dist/
+.editorconfig

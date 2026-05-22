@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Reports &amp; Analytics | QuickServe POS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#e1e3e4",
+                        "surface-container-low": "#f3f4f5",
+                        "primary": "#00535b",
+                        "on-error": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "surface-container-high": "#e7e8e9",
+                        "on-tertiary-container": "#ffd7bd",
+                        "surface": "#f8f9fa",
+                        "outline": "#6f797a",
+                        "on-primary-container": "#9becf7",
+                        "surface-bright": "#f8f9fa",
+                        "tertiary-fixed-dim": "#ffb783",
+                        "primary-container": "#006d77",
+                        "on-surface-variant": "#3e494a",
+                        "inverse-on-surface": "#f0f1f2",
+                        "on-tertiary-fixed": "#301400",
+                        "error-container": "#ffdad6",
+                        "on-secondary-fixed-variant": "#43474c",
+                        "on-secondary-fixed": "#181c20",
+                        "tertiary": "#713d10",
+                        "secondary-container": "#dde0e5",
+                        "inverse-surface": "#2e3132",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed": "#ffdcc5",
+                        "surface-container": "#edeeef",
+                        "secondary-fixed": "#e0e3e8",
+                        "primary-fixed-dim": "#82d3de",
+                        "error": "#ba1a1a",
+                        "surface-dim": "#d9dadb",
+                        "primary-fixed": "#9ff0fb",
+                        "on-primary": "#ffffff",
+                        "surface-container-highest": "#e1e3e4",
+                        "on-surface": "#191c1d",
+                        "on-background": "#191c1d",
+                        "secondary": "#5b5f63",
+                        "secondary-fixed-dim": "#c3c7cc",
+                        "background": "#f8f9fa",
+                        "on-secondary-container": "#5f6368",
+                        "inverse-primary": "#82d3de",
+                        "on-tertiary-fixed-variant": "#6d390c",
+                        "on-primary-fixed": "#001f23",
+                        "on-primary-fixed-variant": "#004f56",
+                        "outline-variant": "#bec8ca",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-container": "#8e5426",
+                        "surface-tint": "#006972",
+                        "on-secondary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "12px",
+                        "touch-target-min": "44px",
+                        "unit": "4px",
+                        "stack-md": "16px",
+                        "stack-sm": "8px",
+                        "margin-desktop": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Outfit"],
+                        "body-sm": ["Inter"],
+                        "headline-md": ["Outfit"],
+                        "body-md": ["Inter"],
+                        "label-lg": ["Inter"],
+                        "data-mono": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "display-lg": ["Outfit"],
+                        "label-md": ["Inter"],
+                        "headline-lg": ["Outfit"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+                        "data-mono": ["16px", {"lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .chart-bar { transition: height 1s ease-in-out; }
+        .heatmap-cell:hover { transform: scale(1.1); z-index: 10; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #bec8ca; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md overflow-hidden h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-40 bg-surface dark:bg-surface-dim border-b border-outline-variant dark:border-outline flex items-center justify-between px-margin-desktop h-14">
+<div class="flex items-center gap-4">
+<span class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">QuickServe POS</span>
+</div>
+<div class="flex-1 max-w-md mx-8">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-on-surface-variant">search</span>
+<input class="w-full pl-10 pr-4 py-1.5 bg-surface-container-low border border-outline-variant rounded-lg font-body-sm focus:outline-none focus:ring-2 focus:ring-primary/20" placeholder="Search reports..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined p-2 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-full active:opacity-80">notifications</button>
+<button class="material-symbols-outlined p-2 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-full active:opacity-80">store</button>
+<button class="material-symbols-outlined p-2 text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-full active:opacity-80">schedule</button>
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-label-md">JD</div>
+</div>
+</header>
+<div class="flex flex-1 pt-14 overflow-hidden">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full w-64 z-50 bg-surface-container dark:bg-inverse-surface py-4 flex flex-col gap-stack-sm mt-14">
+<div class="px-6 py-4 mb-2">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Main Terminal</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Station 01</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 py-3 px-4 text-on-surface-variant hover:bg-surface-variant rounded-lg mx-2 transition-transform duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-lg text-label-lg">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 py-3 px-4 text-on-surface-variant hover:bg-surface-variant rounded-lg mx-2 transition-transform duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-label-lg text-label-lg">Orders</span>
+</a>
+<a class="flex items-center gap-3 py-3 px-4 text-on-surface-variant hover:bg-surface-variant rounded-lg mx-2 transition-transform duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined">restaurant_menu</span>
+<span class="font-label-lg text-label-lg">Menu Manager</span>
+</a>
+<a class="flex items-center gap-3 py-3 px-4 text-on-surface-variant hover:bg-surface-variant rounded-lg mx-2 transition-transform duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-lg text-label-lg">Stock</span>
+</a>
+<a class="flex items-center gap-3 py-3 px-4 bg-primary text-on-primary rounded-lg mx-2 transition-transform duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">assessment</span>
+<span class="font-label-lg text-label-lg">Reports</span>
+</a>
+<a class="flex items-center gap-3 py-3 px-4 text-on-surface-variant hover:bg-surface-variant rounded-lg mx-2 transition-transform duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-lg text-label-lg">Settings</span>
+</a>
+</nav>
+<div class="mt-auto px-4 py-4">
+<div class="p-4 bg-primary-container rounded-xl text-on-primary-container">
+<p class="font-label-md">Cloud Sync</p>
+<p class="font-body-sm opacity-80">Last synced 2m ago</p>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 flex-1 overflow-y-auto custom-scrollbar p-margin-desktop bg-surface">
+<!-- Header Section -->
+<div class="flex justify-between items-end mb-8">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Analytics Overview</h1>
+<p class="font-body-md text-on-surface-variant">Performance metrics for Oct 24 - Oct 31, 2023</p>
+</div>
+<div class="flex gap-3">
+<div class="flex bg-surface-container rounded-lg p-1">
+<button class="px-4 py-1.5 rounded-md font-label-md text-on-surface-variant hover:text-on-surface transition-colors">Weekly</button>
+<button class="px-4 py-1.5 rounded-md bg-surface-container-lowest shadow-sm font-label-md text-primary">Monthly</button>
+<button class="px-4 py-1.5 rounded-md font-label-md text-on-surface-variant hover:text-on-surface transition-colors">Custom</button>
+</div>
+<button class="flex items-center gap-2 bg-primary text-on-primary px-4 py-2 rounded-lg font-label-lg hover:opacity-90 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[20px]">download</span>
+                        Export Report
+                    </button>
+</div>
+</div>
+<!-- Bento Grid - Dashboard Overview -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mb-8">
+<!-- Metric Card 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant p-5 rounded-xl">
+<div class="flex justify-between items-start mb-4">
+<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<span class="text-green-600 font-label-md bg-green-50 px-2 py-0.5 rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">trending_up</span> 12%
+                        </span>
+</div>
+<p class="font-label-md text-on-surface-variant">Total Revenue</p>
+<h3 class="font-headline-md text-headline-md text-on-surface mt-1">$42,850.00</h3>
+</div>
+<!-- Metric Card 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant p-5 rounded-xl">
+<div class="flex justify-between items-start mb-4">
+<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">shopping_bag</span>
+</div>
+<span class="text-green-600 font-label-md bg-green-50 px-2 py-0.5 rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">trending_up</span> 5.2%
+                        </span>
+</div>
+<p class="font-label-md text-on-surface-variant">Average Order Value</p>
+<h3 class="font-headline-md text-headline-md text-on-surface mt-1">$34.20</h3>
+</div>
+<!-- Metric Card 3 -->
+<div class="bg-surface-container-lowest border border-outline-variant p-5 rounded-xl">
+<div class="flex justify-between items-start mb-4">
+<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">receipt_long</span>
+</div>
+<span class="text-red-600 font-label-md bg-red-50 px-2 py-0.5 rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">trending_down</span> 2.1%
+                        </span>
+</div>
+<p class="font-label-md text-on-surface-variant">Total Orders</p>
+<h3 class="font-headline-md text-headline-md text-on-surface mt-1">1,253</h3>
+</div>
+<!-- Metric Card 4 -->
+<div class="bg-surface-container-lowest border border-outline-variant p-5 rounded-xl">
+<div class="flex justify-between items-start mb-4">
+<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">account_balance</span>
+</div>
+<span class="text-green-600 font-label-md bg-green-50 px-2 py-0.5 rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">trending_up</span> 8.4%
+                        </span>
+</div>
+<p class="font-label-md text-on-surface-variant">Gross Profit</p>
+<h3 class="font-headline-md text-headline-md text-on-surface mt-1">$28,412.50</h3>
+</div>
+</div>
+<!-- Central Content Grid -->
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Sales Performance Chart -->
+<div class="col-span-12 lg:col-span-8 bg-surface-container-lowest border border-outline-variant rounded-xl p-6">
+<div class="flex justify-between items-center mb-8">
+<h4 class="font-headline-sm text-headline-sm">Daily Sales Performance</h4>
+<div class="flex items-center gap-4 text-on-surface-variant">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-primary"></div>
+<span class="font-label-md">Current Week</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-surface-variant"></div>
+<span class="font-label-md">Previous Week</span>
+</div>
+</div>
+</div>
+<div class="h-64 flex items-end justify-between gap-4 px-2">
+<!-- Chart Bar Group -->
+<div class="flex-1 flex flex-col items-center gap-2 h-full justify-end">
+<div class="w-full flex gap-1 items-end h-full">
+<div class="w-1/2 bg-surface-variant rounded-t h-[60%]"></div>
+<div class="w-1/2 bg-primary rounded-t h-[85%]" title="Mon: $5,240"></div>
+</div>
+<span class="font-label-md text-on-surface-variant">Mon</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2 h-full justify-end">
+<div class="w-full flex gap-1 items-end h-full">
+<div class="w-1/2 bg-surface-variant rounded-t h-[40%]"></div>
+<div class="w-1/2 bg-primary rounded-t h-[55%]" title="Tue: $4,120"></div>
+</div>
+<span class="font-label-md text-on-surface-variant">Tue</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2 h-full justify-end">
+<div class="w-full flex gap-1 items-end h-full">
+<div class="w-1/2 bg-surface-variant rounded-t h-[50%]"></div>
+<div class="w-1/2 bg-primary rounded-t h-[65%]" title="Wed: $4,850"></div>
+</div>
+<span class="font-label-md text-on-surface-variant">Wed</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2 h-full justify-end">
+<div class="w-full flex gap-1 items-end h-full">
+<div class="w-1/2 bg-surface-variant rounded-t h-[70%]"></div>
+<div class="w-1/2 bg-primary rounded-t h-[90%]" title="Thu: $6,100"></div>
+</div>
+<span class="font-label-md text-on-surface-variant">Thu</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2 h-full justify-end">
+<div class="w-full flex gap-1 items-end h-full">
+<div class="w-1/2 bg-surface-variant rounded-t h-[65%]"></div>
+<div class="w-1/2 bg-primary rounded-t h-[95%]" title="Fri: $7,200"></div>
+</div>
+<span class="font-label-md text-on-surface-variant">Fri</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2 h-full justify-end">
+<div class="w-full flex gap-1 items-end h-full">
+<div class="w-1/2 bg-surface-variant rounded-t h-[80%]"></div>
+<div class="w-1/2 bg-primary rounded-t h-[100%]" title="Sat: $8,400"></div>
+</div>
+<span class="font-label-md text-on-surface-variant">Sat</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2 h-full justify-end">
+<div class="w-full flex gap-1 items-end h-full">
+<div class="w-1/2 bg-surface-variant rounded-t h-[45%]"></div>
+<div class="w-1/2 bg-primary rounded-t h-[60%]" title="Sun: $4,500"></div>
+</div>
+<span class="font-label-md text-on-surface-variant">Sun</span>
+</div>
+</div>
+</div>
+<!-- Automated Insights -->
+<div class="col-span-12 lg:col-span-4 flex flex-col gap-gutter">
+<div class="bg-primary text-on-primary p-6 rounded-xl relative overflow-hidden flex-1">
+<div class="relative z-10">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<h4 class="font-headline-sm text-headline-sm">Smart Insights</h4>
+</div>
+<div class="space-y-4">
+<div class="bg-white/10 p-4 rounded-lg backdrop-blur-sm border border-white/10">
+<p class="font-body-sm leading-relaxed">"Pizza sales are up <span class="font-bold">20%</span> on Friday nights. Consider a 'Friday Family Bundle' to capitalize on this trend."</p>
+</div>
+<div class="bg-white/10 p-4 rounded-lg backdrop-blur-sm border border-white/10">
+<p class="font-body-sm leading-relaxed">"Inventory alert: Avocados are moving faster than usual. Reorder by tomorrow 10 AM to avoid stockouts."</p>
+</div>
+</div>
+</div>
+<!-- Abstract Background Decoration -->
+<div class="absolute -right-8 -bottom-8 w-32 h-32 bg-white/5 rounded-full blur-2xl"></div>
+</div>
+</div>
+<!-- Top Selling Items -->
+<div class="col-span-12 lg:col-span-7 bg-surface-container-lowest border border-outline-variant rounded-xl p-6">
+<div class="flex justify-between items-center mb-6">
+<h4 class="font-headline-sm text-headline-sm">Top Selling Items</h4>
+<button class="text-primary font-label-md hover:underline">View All</button>
+</div>
+<div class="overflow-hidden">
+<table class="w-full text-left">
+<thead>
+<tr class="border-b border-outline-variant">
+<th class="pb-3 font-label-md text-on-surface-variant">Item Name</th>
+<th class="pb-3 font-label-md text-on-surface-variant">Orders</th>
+<th class="pb-3 font-label-md text-on-surface-variant">Revenue</th>
+<th class="pb-3 font-label-md text-on-surface-variant text-right">Trend</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-4 flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center overflow-hidden">
+<img alt="Margherita Pizza" class="w-full h-full object-cover" data-alt="A professional, close-up photograph of a classic Margherita pizza with vibrant red tomato sauce, melted white mozzarella cheese, and fresh green basil leaves. The lighting is warm and inviting, highlighting the crispy texture of the thin crust in a high-end restaurant setting with a clean, minimalist background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsfTS5iilwmT08XFt-nomQwc-eISvd2rHJ9WgSxq6aKrfAupQ5VwW4Lys56d54FLOLS59lwBmXwGoc7rtRbVirZ18Yvz4I5Gk_m91HDJwv98se7PKI8NkTnL4EO1ZcrYDl-Fygv255EhrFDZ9DVYv399IWOr0zuxTXZypL5mUwKDkQ-N86q6VxhY77J6rAXlh4B_QH_CbImIFbYs84FCZIKzPpC9ckcYRRQNWrmQYkII1hzLMJJLVZwK9EiAydayYQ-PrSoHznMssS"/>
+</div>
+<span class="font-label-lg">Margherita Pizza</span>
+</td>
+<td class="py-4 font-body-sm">458</td>
+<td class="py-4 font-body-sm">$6,412.00</td>
+<td class="py-4 text-right">
+<span class="text-green-600 font-label-md">+14%</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-4 flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center overflow-hidden">
+<img alt="Classic Burger" class="w-full h-full object-cover" data-alt="A gourmet cheeseburger presented on a wooden board. The juicy beef patty is layered with melted cheddar cheese, crisp lettuce, and a ripe tomato slice. The lighting is focused and professional, showcasing the rich colors and appetizing textures against a softly blurred, neutral-toned restaurant backdrop." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnIuGSZTI7uZSUvsIr0MMIKq1qCJWGSltQjLEPHXipk8UrxcDNc9Yfd3ZdnjvZK3KPSEcKfF3_znOQpXgS_XdRNZ9DWkizB0Kbz7X0cTLFFgIFjk2r2GVfxrcHhRqoW_M_IhNQ_tXPEqkNyWgy1iJzCor3ThRs-MZ1QHHK9CdHH7Q7ojSN_zTh0tI88WLZ5p32UFSF9HUMhTznKt7HLiYYrSCpj5NpPbW_vcxlfZF5eVB_ooDDMvTxYqOOogeU8tFPebNd_8MXxSUG"/>
+</div>
+<span class="font-label-lg">Classic Burger</span>
+</td>
+<td class="py-4 font-body-sm">382</td>
+<td class="py-4 font-body-sm">$5,348.00</td>
+<td class="py-4 text-right">
+<span class="text-green-600 font-label-md">+8%</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="py-4 flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center overflow-hidden">
+<img alt="Quinoa Salad" class="w-full h-full object-cover" data-alt="A vibrant and healthy quinoa salad bowl filled with colorful vegetables like cherry tomatoes, cucumber, and chickpeas. The dish is beautifully arranged in a modern ceramic bowl, photographed from a top-down perspective with bright, natural lighting that emphasizes freshness and professional culinary presentation." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHX6G2VzhpLUlbUwyLBAvQPzT9EEQkZs1rIsrKvfCEAClzqkNldQqlpyukllH5VYZK6vXwIbxMsn-2KC4d1jjOxXGK-wpBbt3KcUz49V-pK5Iq3YP5D0-OWwSlVCABIglnKbHqF8hDw8iNqy_2LuBOGllbmwFwgTOxwX9oNHSoh5MtRXtkBlkzEECnWQngUY4DpPjNXz3RZq_H64u2IOMnQy-kw-34jUU_uNPVh3LTbDJwPfvDYICTzbYjW0JAROQUpe1m_0QUdayZ"/>
+</div>
+<span class="font-label-lg">Quinoa Salad</span>
+</td>
+<td class="py-4 font-body-sm">294</td>
+<td class="py-4 font-body-sm">$3,234.00</td>
+<td class="py-4 text-right">
+<span class="text-red-600 font-label-md">-3%</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Peak Hours Heatmap -->
+<div class="col-span-12 lg:col-span-5 bg-surface-container-lowest border border-outline-variant rounded-xl p-6">
+<div class="flex justify-between items-center mb-6">
+<h4 class="font-headline-sm text-headline-sm">Peak Hours Heatmap</h4>
+<div class="flex items-center gap-1">
+<span class="font-label-md text-on-surface-variant">Low</span>
+<div class="w-24 h-2 rounded bg-gradient-to-r from-surface-variant to-primary"></div>
+<span class="font-label-md text-on-surface-variant">High</span>
+</div>
+</div>
+<div class="space-y-4">
+<div class="grid grid-cols-12 gap-1 text-center">
+<div class="col-start-2 col-span-2 font-label-md text-on-surface-variant">10 AM</div>
+<div class="col-span-2 font-label-md text-on-surface-variant">12 PM</div>
+<div class="col-span-2 font-label-md text-on-surface-variant">2 PM</div>
+<div class="col-span-2 font-label-md text-on-surface-variant">6 PM</div>
+<div class="col-span-2 font-label-md text-on-surface-variant">8 PM</div>
+</div>
+<!-- Heatmap Rows -->
+<div class="space-y-2">
+<div class="flex items-center gap-3">
+<span class="w-10 font-label-md text-on-surface-variant text-right">Mon</span>
+<div class="flex-1 grid grid-cols-12 h-6 gap-1">
+<div class="heatmap-cell bg-surface-variant rounded-sm" title="9-10 AM: Low"></div>
+<div class="heatmap-cell bg-primary-container/20 rounded-sm"></div>
+<div class="heatmap-cell bg-primary-container/40 rounded-sm"></div>
+<div class="heatmap-cell bg-primary rounded-sm" title="Peak: 12 PM"></div>
+<div class="heatmap-cell bg-primary-container/60 rounded-sm"></div>
+<div class="heatmap-cell bg-surface-variant rounded-sm"></div>
+<div class="heatmap-cell bg-primary-container/20 rounded-sm"></div>
+<div class="heatmap-cell bg-primary-container/50 rounded-sm"></div>
+<div class="heatmap-cell bg-primary rounded-sm" title="Peak: 7 PM"></div>
+<div class="heatmap-cell bg-primary-container/80 rounded-sm"></div>
+<div class="heatmap-cell bg-primary-container/40 rounded-sm"></div>
+<div class="heatmap-cell bg-surface-variant rounded-sm"></div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="w-10 font-label-md text-on-surface-variant text-right">Fri</span>
+<div class="flex-1 grid grid-cols-12 h-6 gap-1">
+<div class="heatmap-cell bg-primary-container/20 rounded-sm"></div>
+<div class="heatmap-cell bg-primary-container/50 rounded-sm"></div>
+<div class="heatmap-cell bg-primary rounded-sm"></div>
+<div class="heatmap-cell bg-primary rounded-sm"></div>
+<div class="heatmap-cell bg-primary-container/70 rounded-sm"></div>
+<div class="heatmap-cell bg-primary-container/40 rounded-sm"></div>
+<div class="heatmap-cell bg-primary-container/50 rounded-sm"></div>
+<div class="heatmap-cell bg-primary-container/80 rounded-sm"></div>
+<div class="heatmap-cell bg-primary rounded-sm"></div>
+<div class="heatmap-cell bg-primary rounded-sm"></div>
+<div class="heatmap-cell bg-primary-container/90 rounded-sm"></div>
+<div class="heatmap-cell bg-primary-container/60 rounded-sm"></div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="w-10 font-label-md text-on-surface-variant text-right">Sat</span>
+<div class="flex-1 grid grid-cols-12 h-6 gap-1">
+<div class="heatmap-cell bg-primary-container/40 rounded-sm"></div>
+<div class="heatmap-cell bg-primary-container/70 rounded-sm"></div>
+<div class="heatmap-cell bg-primary rounded-sm"></div>
+<div class="heatmap-cell bg-primary rounded-sm"></div>
+<div class="heatmap-cell bg-primary rounded-sm"></div>
+<div class="heatmap-cell bg-primary-container/80 rounded-sm"></div>
+<div class="heatmap-cell bg-primary-container/60 rounded-sm"></div>
+<div class="heatmap-cell bg-primary-container/90 rounded-sm"></div>
+<div class="heatmap-cell bg-primary rounded-sm"></div>
+<div class="heatmap-cell bg-primary rounded-sm"></div>
+<div class="heatmap-cell bg-primary rounded-sm"></div>
+<div class="heatmap-cell bg-primary-container/80 rounded-sm"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-6 pt-6 border-t border-outline-variant">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary">info</span>
+<p class="font-body-sm text-on-surface-variant">Busiest period detected: <span class="text-on-surface font-semibold">Friday &amp; Saturday between 6 PM - 9 PM</span>. Ensure staffing is optimized.</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Micro-interaction Scripts -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Animate chart bars on load
+            const bars = document.querySelectorAll('.chart-bar');
+            bars.forEach(bar => {
+                const targetHeight = bar.style.height;
+                bar.style.height = '0%';
+                setTimeout(() => {
+                    bar.style.height = targetHeight;
+                }, 100);
+            });
+
+            // Date Range Toggle
+            const dateButtons = document.querySelectorAll('.bg-surface-container button');
+            dateButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    dateButtons.forEach(b => {
+                        b.classList.remove('bg-surface-container-lowest', 'shadow-sm', 'text-primary');
+                        b.classList.add('text-on-surface-variant', 'hover:text-on-surface');
+                    });
+                    btn.classList.add('bg-surface-container-lowest', 'shadow-sm', 'text-primary');
+                    btn.classList.remove('text-on-surface-variant', 'hover:text-on-surface');
+                });
+            });
+        });
+    </script>
+</body></html>
